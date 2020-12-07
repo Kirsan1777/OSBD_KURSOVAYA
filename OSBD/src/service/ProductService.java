@@ -26,12 +26,11 @@ public class ProductService {
         dao.deleteProduct(nameProduct, user.getId());
     }
 
-    public void changeProduct(){
 
-    }
 
     public void showAllProduct(List<Product> products){
         int number = 1;
+        System.out.println("Name Product  Manufacture\t\tCost\t\tCount\tId\tSeller id ");
         for( Product product : products ){
             System.out.print(number + ")");
             System.out.println(product.toString());

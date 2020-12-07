@@ -26,7 +26,7 @@ public class RegistrationInterface {
 
     }
 
-    public void addUser(String login, String password) throws ProgramException {
+    private void addUser(String login, String password) throws ProgramException {
         UserService user = new UserService();
         user.addUser(login, password);
         System.out.println("You was add to BD");

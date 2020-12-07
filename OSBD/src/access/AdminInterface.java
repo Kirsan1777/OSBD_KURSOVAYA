@@ -1,7 +1,6 @@
 package access;
 
 import dao.DaoImplement;
-import entity.UserInformation;
 import exception.ProgramException;
 import input.ConsoleReader;
 import service.ProductService;

@@ -1,17 +1,17 @@
 package creator;
 
 import entity.Order;
-import input.ConsoleReader;
+
 
 public class OrderCreator {
-    public Order createOrder(){
+   /* public Order createOrder(){
         ConsoleReader in = new ConsoleReader();
         Order newOrder = new Order();
         newOrder.setIdCustomer(in.inputInt());
         newOrder.setIdSeller(in.inputInt());
         newOrder.setPrise(in.inputDouble());
         return newOrder;
-    }
+    }*/
 
     public Order createOrder(double price, int seller, int customer,  int id, String product){
         Order newOrder = new Order();

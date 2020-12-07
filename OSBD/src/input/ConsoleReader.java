@@ -1,8 +1,6 @@
 package input;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
-
 
 public class ConsoleReader {
 
@@ -19,27 +17,34 @@ public class ConsoleReader {
     {
         Scanner in = new Scanner(System.in);
 
-        int numberInt = 0;
-        try {
+        int numberInt;
+
+            while (!in.hasNextInt()) {
+                System.out.println("That not a right number!");
+                in.next();
+            }
             numberInt = in.nextInt();
-        }
-        catch (InputMismatchException ex){
-            System.out.println("This is not right number, please check your input and try again");
-        }
+
+
         return numberInt;
     }
+
 
     public double inputDouble()
     {
         Scanner in = new Scanner(System.in);
-        double numberDouble = 0;
-        try {
-            numberDouble = in.nextDouble();
-        }
-        catch (InputMismatchException ex){
-            System.out.println("This is not right number, please check your input");
-        }
+
+        double numberDouble;
+            while (!in.hasNextDouble()) {
+                System.out.println("That not a right number!");
+                in.next();
+            }
+        numberDouble = in.nextInt();
+
         return numberDouble;
     }
+
+
+
 
 }

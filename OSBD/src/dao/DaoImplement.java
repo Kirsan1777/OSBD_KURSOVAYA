@@ -1,5 +1,6 @@
 package dao;
 
+import creator.BankCreator;
 import creator.OrderCreator;
 import creator.ProductCreator;
 import creator.UserCreator;
@@ -8,7 +9,6 @@ import entity.Order;
 import entity.Product;
 import entity.User;
 import exception.ProgramException;
-import validator.LoginPassword;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -172,18 +172,33 @@ public class DaoImplement {
         return products;
     }
 
-    public Product findProductById(int id) throws ProgramException { //todo Работает
+
+    public List<Product> findAllProductsByName(String nameProduct) throws ProgramException { //todo Работает
         List<Product> products = null;
-        Product product = null;
         try (Connection connection = ConnectionCreator.provideConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlRequest.SELECT_PRODUCT_BY_ID)) {
-            statement.setInt(1, id);
+             PreparedStatement statement = connection.prepareStatement(SqlRequest.SELECT_PRODUCT_BY_NAME)) {
+            statement.setString(1, nameProduct);
             ResultSet resultSet = statement.executeQuery();
             products = readProductInfo(resultSet);
         } catch (SQLException ex) {
             throw new ProgramException(ex);
         }
-        return product = products.get(0);
+        return products;
+    }
+
+
+    public Product findProductById(int id) throws ProgramException{ //todo Работает
+        Product product = null;
+        try (Connection connection = ConnectionCreator.provideConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlRequest.SELECT_PRODUCT_BY_ID)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            product = readProductInfoOnlyOne(resultSet);
+        }
+        catch (SQLException ex) {
+            throw new ProgramException(ex);
+        }
+        return product;
     }
 
     private List<Product> readProductInfo(ResultSet resultSet) throws SQLException{
@@ -197,6 +212,21 @@ public class DaoImplement {
             int count = resultSet.getInt(5);
             int idSeller = resultSet.getInt(6);
             products.add(creator.createProduct(nameProduct, manufacture, price, count, idSeller, idProduct  ));
+        }
+        return products;
+    }
+
+    private Product readProductInfoOnlyOne(ResultSet resultSet) throws SQLException{
+        ProductCreator creator = new ProductCreator();
+        Product products = new Product();
+        while (resultSet.next()) {
+            double price = resultSet.getDouble(1);
+            int idProduct = resultSet.getInt(2);
+            String manufacture = resultSet.getString(3);
+            String nameProduct = resultSet.getString(4);
+            int count = resultSet.getInt(5);
+            int idSeller = resultSet.getInt(6);
+            products = creator.createProduct(nameProduct, manufacture, price, count, idSeller, idProduct);
         }
         return products;
     }
@@ -242,7 +272,6 @@ public class DaoImplement {
         try (Connection connection = ConnectionCreator.provideConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(SqlRequest.TRANSACTION_MONEY_GET)) {
                 statement.setDouble(1, money);//передать деньги
-                System.out.println("Id seller = " + product.getIdSeller());
                 statement.setInt(2, product.getIdSeller());
                 statement.executeUpdate();//command from update DB
             }
@@ -293,14 +322,43 @@ public class DaoImplement {
         OrderCreator creator = new OrderCreator();
         List<Order> orders = new ArrayList<>();
         while (resultSet.next()) {
-            double price = resultSet.getDouble(1);
-            int seller = resultSet.getInt(2);
-            int id = resultSet.getInt(3);
+            int id = resultSet.getInt(1);
+            double price = resultSet.getDouble(2);
+            int seller = resultSet.getInt(3);
             int customer = resultSet.getInt(4);
             String product = resultSet.getString(5);
             orders.add(creator.createOrder(price, seller, customer, id, product));
         }
         return orders;
+    }
+
+    public List<Bank> findTargetBanks(User user) throws ProgramException { //todo Работает
+        List<Bank> banks = null;
+        try (Connection connection = ConnectionCreator.provideConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlRequest.SELECT_ALL_MY_BANK)) {
+            statement.setInt(1, user.getId());
+            ResultSet resultSet = statement.executeQuery();
+            banks = readBankInfo(resultSet);
+        } catch (SQLException ex) {
+            throw new ProgramException(ex);
+        }
+        return banks;
+    }
+
+
+
+    private List<Bank> readBankInfo(ResultSet resultSet) throws SQLException{
+        BankCreator creator = new BankCreator();
+        List<Bank> banks = new ArrayList<>();
+        while (resultSet.next()) {
+            String nameBank = resultSet.getString(1);
+            double balance = resultSet.getDouble(2);
+            int mobileNumber = resultSet.getInt(3);
+            int bankId = resultSet.getInt(4);
+
+            banks.add(creator.createBank(nameBank, balance, mobileNumber, bankId));
+        }
+        return banks;
     }
 
 

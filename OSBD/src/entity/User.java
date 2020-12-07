@@ -70,7 +70,7 @@ public class User {
 
     @Override
     public String toString() {
-        return firstName + "  " + SecondName+ "  " +  city + "  " + login+ "  "  + password+ "  " + id+ "  " + prior;
+        return firstName + "\t\t" + SecondName+ "\t\t" +  city + "\t\t" + login+ "\t\t"  + password+ "\t\t" + id+ "\t\t" + prior;
     }
 
     @Override

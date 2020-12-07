@@ -55,4 +55,9 @@ public class Order {
     public void setProduct(String product) {
         this.product = product;
     }
+
+    @Override
+    public String toString() {
+        return product + " | " + id + " | " + price + " | "+ idSeller + " | "+ idCustomer;
+    }
 }

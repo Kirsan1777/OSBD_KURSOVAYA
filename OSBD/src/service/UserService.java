@@ -4,6 +4,7 @@ import creator.UserCreator;
 import dao.DaoImplement;
 import entity.User;
 import input.ConsoleReader;
+import validator.ValidatorInformation;
 
 import java.util.List;
 
@@ -24,9 +25,10 @@ public class UserService {
     public void deleteUser(){
         ConsoleReader reader = new ConsoleReader();
         DaoImplement userDao = new DaoImplement();
+        ValidatorInformation validator = new ValidatorInformation();
         int id;
         System.out.println("Input id for delete: ");
-        id = reader.inputInt();
+        id = validator.validateIntMin(reader.inputInt(), 0);
         userDao.deleteUser(id);
     }
 

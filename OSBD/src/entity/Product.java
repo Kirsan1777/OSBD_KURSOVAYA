@@ -58,7 +58,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return nameProduct + "  " + manufacture+ "  "+ price + "  " + count + "  " + idProduct + "  " + idSeller;
+        return nameProduct + "\t  " + manufacture+ "\t\t"+ price + "\t\t" + count + "\t\t" + idProduct + "\t\t" + idSeller;
 
     }
 }

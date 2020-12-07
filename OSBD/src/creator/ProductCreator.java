@@ -1,10 +1,13 @@
 package creator;
 
 import entity.Product;
-import entity.User;
 import input.ConsoleReader;
+import validator.ValidatorInformation;
 
 public class ProductCreator {
+
+    public static ValidatorInformation validator = new ValidatorInformation();
+
     public Product createProduct(){
 
         ConsoleReader in = new ConsoleReader();
@@ -14,9 +17,9 @@ public class ProductCreator {
         System.out.println("Input name manufacture: ");
         newProduct.setManufacture(in.inputString());
         System.out.println("Input price: ");
-        newProduct.setPrice(in.inputDouble());
+        newProduct.setPrice(validator.validateDoubleMin(in.inputDouble(), 0));
         System.out.println("Input count: ");
-        newProduct.setCount(in.inputInt());
+        newProduct.setCount(validator.validateIntMin(in.inputInt(), 0));
         return newProduct;
     }
 

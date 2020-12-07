@@ -1,60 +1,77 @@
 package validator;
 
-import exception.NumberException;
+import entity.Bank;
+import input.ConsoleReader;
+
+import java.util.List;
 
 public class ValidatorInformation {
 
-    public boolean isTheBankCard(){
+    public static ConsoleReader in = new ConsoleReader();
 
-        return true;
+    public boolean isTheBankCard(List<Bank> banks){
+        if(banks.size() > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    public Integer validateIntInRange(int number, int min, int max) throws NumberException {
-
-        if (number <= max && number >= min) {
-            return number;
+    public boolean isTheResultMoreThenZero(double firstNumber, double secondNumber, String message){
+        if(firstNumber - secondNumber >= 0 ){
+            return true;
+        }else{
+            System.out.println(message);
+            return false;
         }
-        throw new NumberException("Input correct number");
     }
 
-    public Integer validateIntMax(int number, int max) throws NumberException {
+    public int validateIntInRange(int number, int min, int max)  {
 
-        if (number <= max) {
-            return number;
+        while(number>= max && number <= min) {
+            number = in.inputInt();
         }
-        throw new NumberException("Input correct number");
+        return number;
     }
 
-    public Integer validateIntMin(int number, int min) throws NumberException {
+    public int validateIntMax(int number, int max)  {
 
-        if (number >= min) {
-            return number;
+        while (number >= max) {
+            number = in.inputInt();
         }
-        throw new NumberException("Input correct number");
+        return number;
     }
 
-    public double validateDoubleInRange(double number, double min, double max) throws NumberException {
+    public int validateIntMin(int number, int min)  {
 
-        if (number <= max && number >= min) {
-            return number;
+        while (number <= min) {
+            number = in.inputInt();
         }
-        throw new NumberException("Input correct number");
+        return number;
     }
 
-    public double validateDoubleMax(double number, double max) throws NumberException {
+    public double validateDoubleInRange(double number, double min, double max)  {
 
-        if (number <= max) {
-            return number;
+        while (number >= max && number <= min) {
+            number = in.inputDouble();
         }
-        throw new NumberException("Input correct number");
+        return number;
     }
 
-    public double validateDoubleMin(double number, double min) throws NumberException {
+    public double validateDoubleMax(double number, double max)  {
 
-        if (number >= min) {
-            return number;
+        while (number >= max) {
+            number = in.inputDouble();
         }
-        throw new NumberException("Input correct number");
+        return number;
+    }
+
+    public double validateDoubleMin(double number, double min)  {
+
+        while (number <= min) {
+            number = in.inputDouble();
+        }
+        return number;
     }
 
 }
